@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "30440670665",
+    "project_id": "workify-9a127",
+    "storage_bucket": "workify-9a127.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:30440670665:android:283fe92647cbb52ad75418",
+        "android_client_info": {
+          "package_name": "com.example.workify"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAdU9-fUZhaqDqOdTyC0LatjjH0mTqXbog"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
