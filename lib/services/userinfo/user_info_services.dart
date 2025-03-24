@@ -52,6 +52,18 @@ class UserInfoServices {
     }
   }
 
+  Future<void> setMale() async {
+    User? user = _auth.currentUser;
+    try {
+      await _firestore
+          .collection("Users")
+          .doc(user!.uid)
+          .set({'gender': "Male"});
+    } catch (e) {
+      return;
+    }
+  }
+
   Future<bool> isUserFieldNull(String fieldName) async {
     User? user = FirebaseAuth.instance.currentUser; // Get logged-in user
 

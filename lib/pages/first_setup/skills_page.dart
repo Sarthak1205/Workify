@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:workify/components/my_button.dart';
-import 'package:workify/components/my_selector.dart'; // Import the widget
+import 'package:workify/components/my_selector.dart';
 
 class SkillsPage extends StatefulWidget {
   const SkillsPage({super.key});
@@ -56,7 +56,7 @@ class _SkillsPageState extends State<SkillsPage> {
                           "Voice Over"
                         ],
                         maxSkills: 5,
-                        initialSkills: selectedSkills, // Pass selected skills
+                        initialSkills: selectedSkills,
                         onSkillsUpdated: updateSkills,
                       ),
                       SizedBox(

@@ -6,7 +6,7 @@ import 'package:workify/services/auth/auth_services.dart';
 
 class RegisterPage extends StatelessWidget {
   final void Function()? onTap;
-  RegisterPage({super.key, required this.onTap});
+  const RegisterPage({super.key, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
