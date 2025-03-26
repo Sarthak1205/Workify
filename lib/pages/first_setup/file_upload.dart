@@ -3,6 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:workify/components/my_button.dart';
+import 'package:workify/services/userinfo/portfolio_services.dart';
 
 class FileUpload extends StatefulWidget {
   const FileUpload({super.key});
@@ -16,6 +17,7 @@ class _FileUploadState extends State<FileUpload> {
   File? bannerImage;
   List<PlatformFile> selectedFiles = [];
   String buttonText = "Next 🚫";
+  final _portfolio = PortfolioServices();
 
   Future<void> _pickBannerfromCamera() async {
     final returnedImage =
@@ -57,7 +59,7 @@ class _FileUploadState extends State<FileUpload> {
     return Scaffold(
       body: Center(
         child: Container(
-          height: 600,
+          height: 740,
           width: 350,
           decoration: BoxDecoration(
             border: Border.all(
@@ -138,7 +140,19 @@ class _FileUploadState extends State<FileUpload> {
               SizedBox(height: 25),
               MyButton(
                 text: buttonText,
-                onTap: () => {if (readyToNext) {}},
+                onTap: () => {
+                  if (readyToNext)
+                    {
+                      _portfolio.uploadImageToFirebase(
+                          bannerImage!.path, "ShopBanners"),
+                      _portfolio.uploadMultipleFiles(selectedFiles),
+                      showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                                title: Text("Files Uploaded"),
+                              ))
+                    }
+                },
               )
             ],
           ),

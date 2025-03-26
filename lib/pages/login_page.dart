@@ -23,7 +23,7 @@ class LoginPage extends StatelessWidget {
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Center(
         child: Container(
-          height: 600,
+          height: 612,
           width: 300,
           decoration: BoxDecoration(
               border: Border.all(

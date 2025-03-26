@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:workify/components/my_button.dart';
 import 'package:workify/components/my_selector.dart';
+import 'package:workify/pages/first_setup/file_upload.dart';
 
 class SkillsPage extends StatefulWidget {
   const SkillsPage({super.key});
@@ -11,11 +14,23 @@ class SkillsPage extends StatefulWidget {
 
 class _SkillsPageState extends State<SkillsPage> {
   List<Map<String, String>> selectedSkills = [];
+  final _firestore = FirebaseFirestore.instance;
 
   void updateSkills(List<Map<String, String>> newSkills) {
     setState(() {
       selectedSkills = newSkills;
     });
+  }
+
+  Future<void> setSkills() async {
+    User? user = FirebaseAuth.instance.currentUser;
+
+    await _firestore
+        .collection("Users")
+        .doc(user!.uid)
+        .collection("portfolio")
+        .doc(user.uid)
+        .set({"skills": selectedSkills}, SetOptions(merge: true));
   }
 
   @override
@@ -62,7 +77,15 @@ class _SkillsPageState extends State<SkillsPage> {
                       SizedBox(
                         height: 15,
                       ),
-                      MyButton(text: "Next"),
+                      MyButton(
+                        text: "Next",
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => FileUpload()));
+                        },
+                      ),
                     ],
                   ),
                 ),

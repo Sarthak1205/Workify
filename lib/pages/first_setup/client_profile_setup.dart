@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:workify/components/my_button.dart';
 import 'package:workify/components/my_textfield.dart';
+import 'package:workify/pages/first_setup/shop_setup.dart';
 import 'package:workify/services/auth/auth.dart';
 import 'package:workify/services/userinfo/user_info_services.dart';
 
@@ -109,8 +110,59 @@ class _ClientProfileSetupState extends State<ClientProfileSetup> {
                       SizedBox(
                         height: 15,
                       ),
-                      MyTextfield(
-                          hintText: "Gender", controller: genderController),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          SizedBox(
+                            width: 10,
+                          ),
+                          GestureDetector(
+                            onTap: () => {genderController.text = "Male"},
+                            child: Container(
+                              height: 65,
+                              width: 65,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  border: Border.all(
+                                      width: 3,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary)),
+                              child: Icon(
+                                Icons.male_outlined,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .inversePrimary,
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () => {
+                              genderController.text = "Female",
+                            },
+                            child: Container(
+                              height: 65,
+                              width: 65,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  border: Border.all(
+                                      width: 3,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary)),
+                              child: Icon(
+                                Icons.female_outlined,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .inversePrimary,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                        ],
+                      ),
                       SizedBox(
                         height: 15,
                       ),
@@ -135,7 +187,13 @@ class _ClientProfileSetupState extends State<ClientProfileSetup> {
                       if (_info.checkFreelancer()) ...[
                         MyButton(
                           text: "Next",
-                          onTap: () {},
+                          onTap: () {
+                            setUserInfo();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ShopSetupPage()));
+                          },
                         )
                       ] else ...[
                         MyButton(

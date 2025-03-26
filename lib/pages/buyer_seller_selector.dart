@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:workify/pages/first_setup/client_profile_setup.dart';
-import 'package:workify/pages/home_page.dart';
 import 'package:workify/services/auth/auth_services.dart';
 
 class BuyerSellerSelector extends StatelessWidget {
@@ -15,7 +14,7 @@ class BuyerSellerSelector extends StatelessWidget {
     Navigator.push(
       context,
       MaterialPageRoute(
-          builder: (context) => HomePage()), // Navigate to HomePage
+          builder: (context) => ClientProfileSetup()), // Navigate to HomePage
     );
   }
 

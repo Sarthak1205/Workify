@@ -20,6 +20,23 @@ class UserInfoServices {
     }
   }
 
+  Future<void> updateShopInfo(String org, pos, exp, shopIntro, shopDesc) async {
+    User? user = _auth.currentUser;
+    try {
+      await _firestore
+          .collection("Users")
+          .doc(user!.uid)
+          .collection("portfolio")
+          .doc(user.uid)
+          .set({"organization": org, "position": pos, "experience": exp},
+              SetOptions(merge: true));
+
+      //add for shopIntro and shopDesc(create model shop)
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   bool checkFreelancer() {
     fetchUserRole();
     return isFreelancer;
@@ -49,18 +66,6 @@ class UserInfoServices {
         print(e.toString());
         return;
       }
-    }
-  }
-
-  Future<void> setMale() async {
-    User? user = _auth.currentUser;
-    try {
-      await _firestore
-          .collection("Users")
-          .doc(user!.uid)
-          .set({'gender': "Male"});
-    } catch (e) {
-      return;
     }
   }
 
