@@ -20,6 +20,9 @@ class RegisterPage extends StatelessWidget {
       if (passwordController.text == confirmPasswordController.text) {
         try {
           auth.signUp(emailController.text, passwordController.text);
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                  "Your data has been registered. Kindly Login from the Login Page")));
         } catch (e) {
           showDialog(
               context: context,

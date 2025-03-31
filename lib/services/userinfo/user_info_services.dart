@@ -7,7 +7,7 @@ class UserInfoServices {
   bool isFreelancer = false;
   bool userProfileSet = false;
 
-  void fetchUserRole() async {
+  Future<void> fetchUserRole() async {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       DocumentSnapshot userDoc = await FirebaseFirestore.instance
@@ -17,23 +17,6 @@ class UserInfoServices {
 
       isFreelancer = userDoc["freelancer"] ?? false;
       userProfileSet = userDoc["userInfoSet"] ?? false;
-    }
-  }
-
-  Future<void> updateShopInfo(String org, pos, exp, shopIntro, shopDesc) async {
-    User? user = _auth.currentUser;
-    try {
-      await _firestore
-          .collection("Users")
-          .doc(user!.uid)
-          .collection("portfolio")
-          .doc(user.uid)
-          .set({"organization": org, "position": pos, "experience": exp},
-              SetOptions(merge: true));
-
-      //add for shopIntro and shopDesc(create model shop)
-    } catch (e) {
-      print(e.toString());
     }
   }
 
@@ -52,6 +35,7 @@ class UserInfoServices {
     User? user = _auth.currentUser;
     if (user != null) {
       try {
+        bool profileSetCheck = !checkFreelancer();
         await _firestore.collection("Users").doc(user.uid).set({
           "firstName": firstName,
           "lastName": lastName,
@@ -60,7 +44,7 @@ class UserInfoServices {
           "country": country,
           "bio": bio,
           "dob": dob,
-          "userInfoSet": true
+          "userInfoSet": profileSetCheck
         }, SetOptions(merge: true));
       } on FirebaseException catch (e) {
         print(e.toString());

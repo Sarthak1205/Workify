@@ -36,11 +36,21 @@ class _FreelancerSkillsWidgetState extends State<FreelancerSkillsWidget> {
   void addSkill() {
     if (selectedSkill != null && selectedExperience != null) {
       if (addedSkills.length < widget.maxSkills) {
-        setState(() {
-          addedSkills.add(
-              {"skill": selectedSkill!, "experience": selectedExperience!});
-        });
-        widget.onSkillsUpdated(addedSkills);
+        // Check if skill already exists before adding
+        bool skillExists =
+            addedSkills.any((skill) => skill["skill"] == selectedSkill);
+
+        if (!skillExists) {
+          setState(() {
+            addedSkills.add(
+                {"skill": selectedSkill!, "experience": selectedExperience!});
+          });
+          widget.onSkillsUpdated(addedSkills);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Skill already added!")),
+          );
+        }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -109,16 +119,18 @@ class _FreelancerSkillsWidgetState extends State<FreelancerSkillsWidget> {
         SizedBox(height: 20),
 
         // Added Skills List
-        ...addedSkills.map((skill) {
-          return ListTile(
-            title: Text(skill["skill"]!),
-            subtitle: Text("Experience: ${skill["experience"]}"),
-            trailing: IconButton(
-              icon: Icon(Icons.delete, color: Colors.red),
-              onPressed: () => removeSkill(addedSkills.indexOf(skill)),
-            ),
-          );
-        }).toList(),
+        Column(
+          children: addedSkills.map((skill) {
+            return ListTile(
+              title: Text(skill["skill"]!),
+              subtitle: Text("Experience: ${skill["experience"]}"),
+              trailing: IconButton(
+                icon: Icon(Icons.delete, color: Colors.red),
+                onPressed: () => removeSkill(addedSkills.indexOf(skill)),
+              ),
+            );
+          }).toList(),
+        ),
       ],
     );
   }

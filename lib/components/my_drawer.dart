@@ -49,7 +49,6 @@ class _MyDrawerState extends State<MyDrawer> {
         children: [
           Column(
             children: [
-              // Logo
               DrawerHeader(
                 child: Center(
                   child: Icon(
@@ -60,15 +59,19 @@ class _MyDrawerState extends State<MyDrawer> {
                 ),
               ),
 
-              // Home List Tile
               _buildDrawerItem(
                 icon: Icons.home,
                 text: "H O M E",
                 onTap: () => Navigator.pop(context),
               ),
 
-              // Dynamic Items Based on Role
               if (isFreelancer) ...[
+                _buildDrawerItem(
+                    icon: Icons.build_outlined,
+                    text: "M Y  S H O P",
+                    onTap: () {
+                      // Navigate to My Shop page
+                    }),
                 _buildDrawerItem(
                   icon: Icons.work,
                   text: "M Y  G I G S",
@@ -83,6 +86,13 @@ class _MyDrawerState extends State<MyDrawer> {
                     // Navigate to Earnings page
                   },
                 ),
+              ] else ...[
+                _buildDrawerItem(
+                    icon: Icons.sell,
+                    text: "B E C O M E  A  S E L L E R",
+                    onTap: () {
+                      // Navigate to Shop Setup Page
+                    })
               ],
 
               _buildDrawerItem(
@@ -137,7 +147,6 @@ class _MyDrawerState extends State<MyDrawer> {
     );
   }
 
-  // Helper method for cleaner ListTile UI
   Widget _buildDrawerItem(
       {required IconData icon,
       required String text,

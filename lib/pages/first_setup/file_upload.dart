@@ -3,6 +3,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:workify/components/my_button.dart';
+import 'package:workify/services/auth/auth.dart';
+import 'package:workify/services/shop/shop_service.dart';
 import 'package:workify/services/userinfo/portfolio_services.dart';
 
 class FileUpload extends StatefulWidget {
@@ -144,13 +146,16 @@ class _FileUploadState extends State<FileUpload> {
                   if (readyToNext)
                     {
                       _portfolio.uploadImageToFirebase(
-                          bannerImage!.path, "ShopBanners"),
+                          bannerImage!.path, "banners"),
                       _portfolio.uploadMultipleFiles(selectedFiles),
+                      ShopService().setShopInfo3,
                       showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
                                 title: Text("Files Uploaded"),
-                              ))
+                              )),
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => AuthPage()))
                     }
                 },
               )

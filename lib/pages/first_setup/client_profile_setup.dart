@@ -14,6 +14,20 @@ class ClientProfileSetup extends StatefulWidget {
 
 class _ClientProfileSetupState extends State<ClientProfileSetup> {
   final _info = UserInfoServices();
+  bool isFreelancer = false;
+
+  @override
+  void initState() {
+    fetchUserRole();
+    super.initState();
+  }
+
+  void fetchUserRole() async {
+    await _info.fetchUserRole();
+    setState(() {
+      isFreelancer = _info.checkFreelancer();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,8 +68,6 @@ class _ClientProfileSetupState extends State<ClientProfileSetup> {
             countryController.text,
             bioController.text,
             dobController.text);
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => AuthPage()));
       } else {
         showDialog(
             context: context,
@@ -184,23 +196,29 @@ class _ClientProfileSetupState extends State<ClientProfileSetup> {
                       SizedBox(
                         height: 35,
                       ),
-                      if (_info.checkFreelancer()) ...[
-                        MyButton(
-                          text: "Next",
-                          onTap: () {
-                            setUserInfo();
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ShopSetupPage()));
-                          },
-                        )
-                      ] else ...[
-                        MyButton(
-                          text: "Finish",
-                          onTap: setUserInfo,
-                        )
-                      ]
+                      isFreelancer
+                          ? MyButton(
+                              text: "Next",
+                              onTap: () {
+                                setUserInfo();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ShopSetupPage()),
+                                );
+                              },
+                            )
+                          : MyButton(
+                              text: "Finish",
+                              onTap: () {
+                                setUserInfo();
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => AuthPage()),
+                                );
+                              },
+                            )
                     ],
                   ),
                 ),

@@ -5,6 +5,7 @@ class AuthService {
   // Firebase instances
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  bool freelancer = true;
 
   // Get currently logged-in user
   User? getCurrentUser() {
@@ -68,9 +69,9 @@ class AuthService {
     User? user = _auth.currentUser;
 
     if (user != null) {
-      await _firestore.collection('Users').doc(user.uid).update({
-        'freelancer': true,
-      });
+      await _firestore.collection('Users').doc(user.uid).set({
+        'freelancer': freelancer,
+      }, SetOptions(merge: true));
     }
   }
 
@@ -78,9 +79,9 @@ class AuthService {
     User? user = _auth.currentUser;
 
     if (user != null) {
-      await _firestore.collection('Users').doc(user.uid).update({
-        'freelancer': false,
-      });
+      await _firestore.collection('Users').doc(user.uid).set({
+        'freelancer': !freelancer,
+      }, SetOptions(merge: true));
     }
   }
 }

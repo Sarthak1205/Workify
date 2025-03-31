@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    fetchImagePath(); // Fetch image path when widget loads
+    fetchImagePath();
   }
 
   Future<void> fetchImagePath() async {
@@ -80,6 +80,29 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       drawer: MyDrawer(),
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: "Search . . .",
+                hintStyle: TextStyle(
+                    color: Theme.of(context).colorScheme.inversePrimary),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.secondary)),
+                fillColor: Theme.of(context).colorScheme.surface,
+                filled: true,
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                  color: Theme.of(context).colorScheme.primary,
+                )),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

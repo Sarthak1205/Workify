@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:workify/components/my_button.dart';
 import 'package:workify/components/my_selector.dart';
 import 'package:workify/pages/first_setup/file_upload.dart';
+import 'package:workify/services/shop/shop_service.dart';
 
 class SkillsPage extends StatefulWidget {
   const SkillsPage({super.key});
@@ -31,6 +32,8 @@ class _SkillsPageState extends State<SkillsPage> {
         .collection("portfolio")
         .doc(user.uid)
         .set({"skills": selectedSkills}, SetOptions(merge: true));
+
+    await ShopService().setShopInfo2(selectedSkills);
   }
 
   @override
@@ -55,13 +58,11 @@ class _SkillsPageState extends State<SkillsPage> {
                   child: Column(
                     children: [
                       Text(
-                        "Step 2: Add Upto 5 Skills",
+                        "Step 2: Add Up to 5 Skills",
                         style: TextStyle(
                             fontSize: 24, fontWeight: FontWeight.bold),
                       ),
-                      SizedBox(
-                        height: 25,
-                      ),
+                      SizedBox(height: 25),
                       FreelancerSkillsWidget(
                         skills: [
                           "Flutter",
@@ -74,13 +75,13 @@ class _SkillsPageState extends State<SkillsPage> {
                         initialSkills: selectedSkills,
                         onSkillsUpdated: updateSkills,
                       ),
-                      SizedBox(
-                        height: 15,
-                      ),
+                      SizedBox(height: 15),
                       MyButton(
                         text: "Next",
-                        onTap: () {
+                        onTap: () async {
+                          await setSkills();
                           Navigator.push(
+                              // ignore: use_build_context_synchronously
                               context,
                               MaterialPageRoute(
                                   builder: (context) => FileUpload()));

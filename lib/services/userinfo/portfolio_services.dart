@@ -16,6 +16,11 @@ class PortfolioServices {
         .collection("portfolio")
         .doc(user.uid)
         .set({"bannerImage": url}, SetOptions(merge: true));
+
+    await _firestore
+        .collection("Shops")
+        .doc(user.uid)
+        .set({"bannerImage": url}, SetOptions(merge: true));
   }
 
   Future<void> saveFileUrls(List<String> urls) async {
@@ -26,18 +31,27 @@ class PortfolioServices {
         .collection("portfolio")
         .doc(user.uid)
         .set({"urls": urls}, SetOptions(merge: true));
+
+    //update userInfo and freelancer
+    await _firestore
+        .collection("Users")
+        .doc(user.uid)
+        .update({"userInfoSet": true, "freelancer": true});
   }
 
   Future<void> uploadMultipleFiles(List<PlatformFile> files) async {
     List<String> urls = [];
+    User? user = FirebaseAuth.instance.currentUser;
+
     for (var file in files) {
-      if (file.path == null) continue; // Skip files without a path
+      if (file.path == null) continue;
 
       File localFile = File(file.path!);
       String fileName = file.name;
 
       try {
-        Reference storageRef = _storage.ref().child("uploads/$fileName");
+        Reference storageRef =
+            _storage.ref().child("uploads/${user!.uid}/$fileName");
         UploadTask uploadTask = storageRef.putFile(localFile);
         TaskSnapshot snapshot = await uploadTask;
         String downloadUrl = await snapshot.ref.getDownloadURL();
@@ -54,12 +68,14 @@ class PortfolioServices {
   Future<void> uploadImageToFirebase(
       String imagePath, String folderName) async {
     if (imagePath.isEmpty) return;
+    User? user = FirebaseAuth.instance.currentUser;
 
     File file = File(imagePath);
     String fileName = imagePath.split('/').last;
 
     try {
-      Reference storageRef = _storage.ref().child("$folderName/$fileName");
+      Reference storageRef =
+          _storage.ref().child("$folderName/${user!.uid}/$fileName");
 
       UploadTask uploadTask = storageRef.putFile(file);
 
