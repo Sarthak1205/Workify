@@ -16,14 +16,18 @@ class SettingsPage extends StatelessWidget {
         title: Text("Settings Page"),
         centerTitle: true,
       ),
-      body: ListTile(
-        title: Text("Theme"),
-        trailing: IconButton(
-            onPressed:
-                Provider.of<ThemeProvider>(context, listen: false).toggle,
-            icon: (getTheme(context)
-                ? Icon(Icons.mode_night)
-                : Icon(Icons.sunny))),
+      body: Column(
+        children: [
+          ListTile(
+            title: Text("Theme"),
+            trailing: IconButton(
+                onPressed:
+                    Provider.of<ThemeProvider>(context, listen: false).toggle,
+                icon: (getTheme(context)
+                    ? Icon(Icons.mode_night)
+                    : Icon(Icons.sunny))),
+          ),
+        ],
       ),
     );
   }

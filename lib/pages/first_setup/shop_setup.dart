@@ -19,6 +19,7 @@ class _ShopSetupPageState extends State<ShopSetupPage> {
   TextEditingController shopIntroductionController = TextEditingController();
   TextEditingController shopDescriptionController = TextEditingController();
   TextEditingController shopCategoryController = TextEditingController();
+  final priceController = TextEditingController();
 
   void setShopData() {
     bool valid = true;
@@ -29,7 +30,8 @@ class _ShopSetupPageState extends State<ShopSetupPage> {
       experienceController.text,
       shopIntroductionController.text,
       shopDescriptionController.text,
-      shopCategoryController.text
+      shopCategoryController.text,
+      priceController.text
     ]) {
       if (s.trim().isEmpty) {
         valid = false;
@@ -39,13 +41,13 @@ class _ShopSetupPageState extends State<ShopSetupPage> {
 
     if (valid) {
       _shop.setShopInfo1(
-        orgController.text,
-        positionController.text,
-        experienceController.text,
-        shopIntroductionController.text,
-        shopDescriptionController.text,
-        shopCategoryController.text,
-      );
+          orgController.text,
+          positionController.text,
+          experienceController.text,
+          shopIntroductionController.text,
+          shopDescriptionController.text,
+          shopCategoryController.text,
+          priceController.text);
 
       Navigator.pushReplacement(
         context,
@@ -68,7 +70,7 @@ class _ShopSetupPageState extends State<ShopSetupPage> {
     return Scaffold(
       body: Center(
           child: Container(
-        height: 750,
+        height: 800,
         width: 350,
         decoration: BoxDecoration(
             border: Border.all(
@@ -106,6 +108,11 @@ class _ShopSetupPageState extends State<ShopSetupPage> {
             ),
             MyTextfield(
                 hintText: "Shop Category", controller: shopCategoryController),
+            SizedBox(
+              height: 15,
+            ),
+            MyTextfield(
+                hintText: "Service Pricing", controller: priceController),
             SizedBox(
               height: 15,
             ),

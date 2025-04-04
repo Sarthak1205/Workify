@@ -2,6 +2,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:workify/pages/inbox_page.dart';
+import 'package:workify/pages/my_shop_page.dart';
 import 'package:workify/pages/settings_page.dart';
 import 'package:workify/services/auth/auth_services.dart';
 
@@ -64,6 +67,15 @@ class _MyDrawerState extends State<MyDrawer> {
                 text: "H O M E",
                 onTap: () => Navigator.pop(context),
               ),
+              _buildDrawerItem(
+                icon: Icons.chat_outlined,
+                text: "I N B O X",
+                onTap: () {
+                  // Navigate to My Inbox page
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => InboxPage()));
+                },
+              ),
 
               if (isFreelancer) ...[
                 _buildDrawerItem(
@@ -71,6 +83,11 @@ class _MyDrawerState extends State<MyDrawer> {
                     text: "M Y  S H O P",
                     onTap: () {
                       // Navigate to My Shop page
+                      Navigator.pop(context);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => MyShopPage()));
                     }),
                 _buildDrawerItem(
                   icon: Icons.work,
@@ -102,13 +119,13 @@ class _MyDrawerState extends State<MyDrawer> {
                   // Navigate to My Orders page
                 },
               ),
-              _buildDrawerItem(
-                icon: Icons.favorite,
-                text: "S A V E D  G I G S",
-                onTap: () {
-                  // Navigate to Saved Gigs page
-                },
-              ),
+              // _buildDrawerItem(
+              //   icon: Icons.favorite,
+              //   text: "S A V E D  G I G S",
+              //   onTap: () {
+              //     // Navigate to Saved Gigs page
+              //   },
+              // ),
 
               // Settings
               _buildDrawerItem(
@@ -131,7 +148,7 @@ class _MyDrawerState extends State<MyDrawer> {
             child: ListTile(
               title: Text(
                 "L O G O U T",
-                style: TextStyle(
+                style: GoogleFonts.ubuntu(
                   color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
@@ -156,7 +173,8 @@ class _MyDrawerState extends State<MyDrawer> {
       child: ListTile(
         title: Text(
           text,
-          style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+          style: GoogleFonts.ubuntu(
+              color: Theme.of(context).colorScheme.secondary),
         ),
         leading: Icon(icon, color: Theme.of(context).colorScheme.secondary),
         onTap: onTap,

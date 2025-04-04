@@ -34,12 +34,16 @@ class LoginPage extends StatelessWidget {
               SizedBox(
                 height: 55,
               ),
-              Icon(
-                Icons.person,
-                size: 90,
+              Container(
+                height: 100,
+                padding: EdgeInsets.all(20),
+                child: Image.asset(
+                  "lib/images/logo.png",
+                  color: Theme.of(context).colorScheme.secondary,
+                ),
               ),
               SizedBox(
-                height: 40,
+                height: 30,
               ),
               MyTextfield(
                   hintText: "Email",

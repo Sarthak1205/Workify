@@ -7,7 +7,7 @@ class ShopService {
   final _firestore = FirebaseFirestore.instance;
 
   Future<void> setShopInfo1(
-      String org, pos, exp, shopIntro, shopDesc, shopCategory) async {
+      String org, pos, exp, shopIntro, shopDesc, shopCategory, price) async {
     User? user = _auth.currentUser;
 
     final shopId = Uuid().v4();
@@ -27,6 +27,7 @@ class ShopService {
         "shopIntro": shopIntro,
         "shopDesc": shopDesc,
         "shopCategory": shopCategory,
+        "price": price
       }, SetOptions(merge: true));
     } catch (e) {
       print(e.toString());
@@ -52,5 +53,16 @@ class ShopService {
         .collection("Shops")
         .doc(user!.uid)
         .set({"bannerImage": url}, SetOptions(merge: true));
+  }
+
+  Stream<List<Map<String, dynamic>>> getShopStream() {
+    return _firestore.collection("Shops").snapshots().map((snapshot) {
+      return snapshot.docs.map((doc) {
+        //go through individual shop
+        final shop = doc.data();
+        //return shop
+        return shop;
+      }).toList();
+    });
   }
 }

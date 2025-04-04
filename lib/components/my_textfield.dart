@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MyTextfield extends StatelessWidget {
   final String hintText;
@@ -28,7 +29,7 @@ class MyTextfield extends StatelessWidget {
           fillColor: Theme.of(context).colorScheme.surface,
           filled: true,
           hintText: hintText,
-          hintStyle: TextStyle(
+          hintStyle: GoogleFonts.ubuntu(
             color: Theme.of(context).colorScheme.inversePrimary,
           ),
         ),

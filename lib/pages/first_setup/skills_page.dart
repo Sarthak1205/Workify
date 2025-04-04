@@ -14,6 +14,59 @@ class SkillsPage extends StatefulWidget {
 }
 
 class _SkillsPageState extends State<SkillsPage> {
+  List<String> availableSkills = [
+    "Graphic Design",
+    "Logo Design",
+    "Illustration",
+    "UI/UX Design",
+    "Web Design",
+    "Frontend Development",
+    "Backend Development",
+    "Full-Stack Development",
+    "Flutter Development",
+    "React Development",
+    "Mobile App Development",
+    "Android Development",
+    "iOS Development",
+    "Game Development",
+    "WordPress Development",
+    "Copywriting",
+    "Content Writing",
+    "SEO Writing",
+    "Technical Writing",
+    "Ghostwriting",
+    "Social Media Marketing",
+    "SEO Optimization",
+    "Email Marketing",
+    "PPC Advertising",
+    "Affiliate Marketing",
+    "Video Editing",
+    "Motion Graphics",
+    "3D Animation",
+    "YouTube Video Editing",
+    "After Effects Editing",
+    "Data Entry",
+    "Virtual Assistance",
+    "Customer Support",
+    "Project Management",
+    "Data Analysis",
+    "Machine Learning",
+    "AI Development",
+    "Data Science",
+    "Deep Learning",
+    "Computer Vision",
+    "Cybersecurity",
+    "Penetration Testing",
+    "Ethical Hacking",
+    "Network Security",
+    "Blockchain Development",
+    "Finance Consulting",
+    "Business Planning",
+    "Market Research",
+    "Legal Consulting",
+    "HR & Recruiting"
+  ];
+
   List<Map<String, String>> selectedSkills = [];
   final _firestore = FirebaseFirestore.instance;
 
@@ -64,13 +117,7 @@ class _SkillsPageState extends State<SkillsPage> {
                       ),
                       SizedBox(height: 25),
                       FreelancerSkillsWidget(
-                        skills: [
-                          "Flutter",
-                          "Dart",
-                          "Firebase",
-                          "UI/UX",
-                          "Voice Over"
-                        ],
+                        skills: availableSkills,
                         maxSkills: 5,
                         initialSkills: selectedSkills,
                         onSkillsUpdated: updateSkills,
