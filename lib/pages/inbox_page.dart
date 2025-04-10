@@ -32,17 +32,14 @@ class _InboxPageState extends State<InboxPage> {
     return StreamBuilder(
         stream: _chatService.getChatrooms(senderID),
         builder: (context, snapshot) {
-          //error
           if (snapshot.hasError) {
             return Text("Error");
           }
 
-          //loading
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Text("Loading...");
           }
 
-          //return list view
           return ListView(
             children:
                 snapshot.data!.docs.map((doc) => _buildChatItem(doc)).toList(),
@@ -92,10 +89,10 @@ class _InboxPageState extends State<InboxPage> {
                   children: [
                     Icon(Icons.person_2_outlined),
                     SizedBox(
-                      width: 60,
+                      width: 50,
                     ),
                     Text(
-                      recieverDoc['firstName'],
+                      "${recieverDoc['firstName']} ${recieverDoc['lastName']}",
                       style: GoogleFonts.ubuntu(
                           fontSize: 19, fontWeight: FontWeight.bold),
                     ),

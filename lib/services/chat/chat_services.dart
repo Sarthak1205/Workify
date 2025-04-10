@@ -3,30 +3,24 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:workify/models/message.dart';
 
 class ChatService {
-  // get instance of firestore and auth
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // get user stream
   Stream<List<Map<String, dynamic>>> getUserStream() {
     return _firestore.collection("Users").snapshots().map((snapshot) {
       return snapshot.docs.map((doc) {
-        //go through individual user
         final user = doc.data();
-        //return user
+
         return user;
       }).toList();
     });
   }
 
-  // send message
   Future<void> sendMessage(String receiverId, message) async {
-    //get curr user info
     final String currentUserId = _auth.currentUser!.uid;
     final String currentUserEmail = _auth.currentUser!.email!;
     final Timestamp timestamp = Timestamp.now();
 
-    //create a new message
     Message newMessage = Message(
         senderId: currentUserId,
         senderEmail: currentUserEmail,
@@ -34,12 +28,10 @@ class ChatService {
         message: message,
         timestamp: timestamp);
 
-    // construct chat room ID for two users (sorted to ensure uniqueness)
     List<String> ids = [currentUserId, receiverId];
-    ids.sort(); // sort the ids to ensure chatroomID is the same for 2 people
+    ids.sort();
     String chatRoomID = ids.join('_');
 
-    //add new message to the database
     await _firestore
         .collection("ChatRooms")
         .doc(chatRoomID)
@@ -52,10 +44,9 @@ class ChatService {
         .set({'userList': ids}, SetOptions(merge: true));
   }
 
-  // get messages
   Stream<QuerySnapshot> getMessages(String userID, otherUserID) {
     List<String> ids = [userID, otherUserID];
-    ids.sort(); // sort the ids to ensure chatroomID is the same for 2 people
+    ids.sort();
     String chatRoomID = ids.join('_');
 
     return _firestore

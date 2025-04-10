@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:workify/components/my_drawer.dart';
 import 'package:workify/components/shop_tile.dart';
 import 'package:workify/pages/profile_page.dart';
+import 'package:workify/pages/shop_by_tag.dart';
 import 'package:workify/pages/shop_page.dart';
 import 'package:workify/services/shop/shop_service.dart';
 
@@ -111,29 +112,43 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+            padding: EdgeInsets.symmetric(horizontal: 18, vertical: 5),
             child: Text(
-              "Tags",
+              "Popular Tags",
               style:
                   GoogleFonts.ubuntu(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           ),
-          SizedBox(
-            height: 140,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                _buildCategoryItem(),
-                _buildCategoryItem(),
-                _buildCategoryItem(),
-                _buildCategoryItem(),
-                _buildCategoryItem(),
-                _buildCategoryItem(),
-              ],
+          Padding(
+            padding: const EdgeInsets.only(left: 9.0),
+            child: SizedBox(
+              height: 160,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  _buildCategoryItem(
+                      imagePath: "lib/images/tags/food_tag.jpg", tag: "Food"),
+                  _buildCategoryItem(
+                      imagePath: "lib/images/tags/Illustration_icons.jpeg",
+                      tag: "Illustration"),
+                  _buildCategoryItem(
+                      imagePath: "lib/images/tags/Logo_Design.png",
+                      tag: "Logo Design"),
+                  _buildCategoryItem(
+                      imagePath: "lib/images/tags/ios_development_logo.png",
+                      tag: "iOS Development"),
+                  _buildCategoryItem(
+                      imagePath: "lib/images/tags/GAme_development_logo.jpeg",
+                      tag: "Game Development"),
+                  _buildCategoryItem(
+                      imagePath: "lib/images/tags/YouTubeVideoEditing.jpeg",
+                      tag: "YT Video Editing")
+                ],
+              ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+            padding: EdgeInsets.symmetric(horizontal: 18, vertical: 5),
             child: Text(
               "Gigs you may like",
               style:
@@ -146,31 +161,50 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildCategoryItem() {
+  Widget _buildCategoryItem({required String imagePath, required String tag}) {
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: Column(
-        spacing: 4,
         children: [
-          Container(
-            height: 100,
-            width: 100,
-            decoration: BoxDecoration(
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ShopByTag(tag: tag)));
+            },
+            child: Container(
+              height: 100,
+              width: 100,
+              decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.primary,
-                borderRadius: BorderRadius.circular(16)),
-            child: Image.asset(
-              "lib/images/abc.jpeg",
-              height: 40,
-              width: 40,
-              fit: BoxFit.fill,
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(3.0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(14),
+                  child: Image.asset(
+                    imagePath,
+                    height: 40,
+                    width: 40,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
             ),
           ),
-          Text(
-            "Picture Designer",
-            textAlign: TextAlign.center,
-            style: GoogleFonts.ubuntu(
-                color: Theme.of(context).colorScheme.inversePrimary),
-          )
+          const SizedBox(height: 4),
+          SizedBox(
+            width: 100,
+            child: Text(
+              tag,
+              textAlign: TextAlign.center,
+              softWrap: true,
+              overflow: TextOverflow.visible,
+              style: GoogleFonts.ubuntu(
+                color: Theme.of(context).colorScheme.inversePrimary,
+              ),
+            ),
+          ),
         ],
       ),
     );

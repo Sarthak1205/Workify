@@ -72,6 +72,7 @@ class _MyDrawerState extends State<MyDrawer> {
                 text: "I N B O X",
                 onTap: () {
                   // Navigate to My Inbox page
+                  Navigator.pop(context);
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => InboxPage()));
                 },

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:workify/components/chat_bubble.dart';
 import 'package:workify/components/my_textfield.dart';
 import 'package:workify/services/auth/auth_services.dart';
@@ -29,7 +30,9 @@ class ChatPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           receiverEmail,
-          style: TextStyle(fontWeight: FontWeight.bold),
+          style: GoogleFonts.ubuntu(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).colorScheme.inversePrimary),
         ),
         centerTitle: true,
         backgroundColor: Colors.transparent,
@@ -88,7 +91,7 @@ class ChatPage extends StatelessWidget {
   //build message input
   Widget _buildUserInput() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 25.0),
+      padding: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 16),
       child: Row(
         children: [
           Expanded(
@@ -97,8 +100,9 @@ class ChatPage extends StatelessWidget {
                   obscureText: false,
                   controller: messageController)),
           Container(
-            decoration:
-                BoxDecoration(color: Colors.green, shape: BoxShape.circle),
+            decoration: BoxDecoration(
+                color: Color.fromARGB(255, 133, 55, 228),
+                shape: BoxShape.circle),
             child: IconButton(
                 onPressed: sendMessage,
                 icon: Icon(

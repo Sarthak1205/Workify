@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:workify/pages/buy_preview_page.dart';
+import 'package:workify/pages/bill_page.dart';
 import 'package:workify/pages/chat/chat_page.dart';
 
 class ShopPage extends StatefulWidget {
@@ -52,172 +52,198 @@ class _ShopPageState extends State<ShopPage> {
                 "${ownerDoc['firstName']} ${ownerDoc['lastName']}'s Shop";
 
             return Scaffold(
-              appBar: AppBar(
-                title: Text(
-                  ownerName,
-                  style: GoogleFonts.ubuntu(
-                      color: Theme.of(context).colorScheme.secondary),
+                appBar: AppBar(
+                  title: Text(
+                    ownerName,
+                    style: GoogleFonts.ubuntu(
+                        color: Theme.of(context).colorScheme.secondary),
+                  ),
+                  centerTitle: true,
                 ),
-                centerTitle: true,
-              ),
-              body: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-                future: firestore
-                    .collection("Users")
-                    .doc(ownerId)
-                    .collection('portfolio')
-                    .doc(ownerId)
-                    .get(),
-                builder: (context, portfolioSnapshot) {
-                  if (portfolioSnapshot.connectionState ==
-                      ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
+                body: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+                  future: firestore
+                      .collection("Users")
+                      .doc(ownerId)
+                      .collection('portfolio')
+                      .doc(ownerId)
+                      .get(),
+                  builder: (context, portfolioSnapshot) {
+                    if (portfolioSnapshot.connectionState ==
+                        ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
 
-                  if (!portfolioSnapshot.hasData ||
-                      !portfolioSnapshot.data!.exists) {
-                    return const Center(child: Text("Portfolio not found!"));
-                  }
+                    if (!portfolioSnapshot.hasData ||
+                        !portfolioSnapshot.data!.exists) {
+                      return const Center(child: Text("Portfolio not found!"));
+                    }
 
-                  var portfolioDoc = portfolioSnapshot.data!;
-                  String bannerImage = portfolioDoc['bannerImage'] ?? "";
-                  // String profileImage = portfolioDoc['profileImage'] ?? "";
-                  return ListView(children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15, vertical: 5),
-                      child: Column(
-                        spacing: 11,
-                        children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              shopDoc['shopIntro'],
-                              style: GoogleFonts.ubuntu(
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Container(
-                            height: 200,
-                            width: 480,
-                            decoration: BoxDecoration(color: Colors.blueAccent),
-                            child: bannerImage.isNotEmpty
-                                ? Image.network(bannerImage, fit: BoxFit.cover)
-                                : const Center(
-                                    child: Text("No Image Available")),
-                          ),
-                          SizedBox(
-                            height: 4,
-                          ),
-                          Row(
-                            children: [
-                              // add profile to firebase
-                              shopDoc['bannerImage'] == null
-                                  ? CircleAvatar(
-                                      radius: 25,
-                                      backgroundImage:
-                                          AssetImage("lib/images/profile.png"),
-                                    )
-                                  : CircleAvatar(
-                                      radius: 25,
-                                      backgroundImage:
-                                          NetworkImage(shopDoc['bannerImage']),
-                                    ),
-                              SizedBox(
-                                width: 25,
-                              ),
-
-                              _buildSubtitle(
-                                  text:
-                                      "${ownerDoc['firstName']}, ${ownerDoc['lastName']}",
-                                  icon: Icons.person_2_rounded),
-
-                              SizedBox(
-                                width: 100,
-                              ),
-
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => ChatPage(
-                                              receiverEmail: ownerDoc['email'],
-                                              receiverID: ownerDoc['uid'])));
-                                },
-                                child: Container(
-                                  height: 40,
-                                  width: 87,
-                                  decoration: BoxDecoration(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                      borderRadius: BorderRadius.circular(60)),
-                                  child: Center(
-                                      child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Icon(Icons.message_outlined),
-                                      Text(
-                                        "Chat",
-                                        style: GoogleFonts.ubuntu(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  )),
-                                ),
-                              ),
-                            ],
-                          ),
-                          _buildSubtitle(
-                              text:
-                                  "${portfolioDoc['position']} at ${portfolioDoc['organization']}",
-                              icon: Icons.badge_outlined),
-                          _buildSubtitle(
-                              text: "${portfolioDoc['experience']} months",
-                              icon: Icons.timelapse_outlined),
-                          _buildSubtitle(
-                              text: "Skills",
-                              icon: Icons.skateboarding_outlined),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Column(
-                              spacing: 5,
-                              children: getSkillsList(shopDoc, context),
-                            ),
-                          ),
-                          _buildSubtitle(
-                              text: _displayPrice(shopDoc),
-                              icon: Icons.currency_rupee_rounded),
-                          _buildSubtitle(
-                              text: "My PortFolio",
-                              icon: Icons.file_present_outlined),
-                          _buildSubtitle(
-                              text: "Description", icon: Icons.notes_rounded),
-                          Row(
-                            children: [
-                              Text(
-                                shopDoc['shopDesc'],
+                    var portfolioDoc = portfolioSnapshot.data!;
+                    String bannerImage = portfolioDoc['bannerImage'] ?? "";
+                    // String profileImage = portfolioDoc['profileImage'] ?? "";
+                    return ListView(children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 5),
+                        child: Column(
+                          spacing: 11,
+                          children: [
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                shopDoc['shopIntro'],
                                 style: GoogleFonts.ubuntu(
-                                  fontSize: 15,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .inversePrimary,
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                textAlign: TextAlign.left,
                               ),
-                            ],
-                          ),
-                        ],
+                            ),
+                            Container(
+                              height: 200,
+                              width: 480,
+                              decoration:
+                                  BoxDecoration(color: Colors.blueAccent),
+                              child: bannerImage.isNotEmpty
+                                  ? Image.network(bannerImage,
+                                      fit: BoxFit.cover)
+                                  : const Center(
+                                      child: Text("No Image Available")),
+                            ),
+                            SizedBox(
+                              height: 4,
+                            ),
+                            Row(
+                              children: [
+                                // add profile to firebase
+                                shopDoc['bannerImage'] == null
+                                    ? CircleAvatar(
+                                        radius: 25,
+                                        backgroundImage: AssetImage(
+                                            "lib/images/profile.png"),
+                                      )
+                                    : CircleAvatar(
+                                        radius: 25,
+                                        backgroundImage: NetworkImage(
+                                            shopDoc['bannerImage']),
+                                      ),
+                                SizedBox(
+                                  width: 25,
+                                ),
+
+                                _buildSubtitle(
+                                    text:
+                                        "${ownerDoc['firstName']}, ${ownerDoc['lastName']}",
+                                    icon: Icons.person_2_rounded),
+
+                                SizedBox(
+                                  width: 100,
+                                ),
+
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => ChatPage(
+                                                receiverEmail:
+                                                    ownerDoc['email'],
+                                                receiverID: ownerDoc['uid'])));
+                                  },
+                                  child: Container(
+                                    height: 40,
+                                    width: 87,
+                                    decoration: BoxDecoration(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        borderRadius:
+                                            BorderRadius.circular(60)),
+                                    child: Center(
+                                        child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Icon(Icons.message_outlined),
+                                        Text(
+                                          "Chat",
+                                          style: GoogleFonts.ubuntu(
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ],
+                                    )),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            _buildSubtitle(
+                                text:
+                                    "${portfolioDoc['position']} at ${portfolioDoc['organization']}",
+                                icon: Icons.badge_outlined),
+                            _buildSubtitle(
+                                text: "${portfolioDoc['experience']} months",
+                                icon: Icons.timelapse_outlined),
+                            _buildSubtitle(
+                                text: "Skills",
+                                icon: Icons.skateboarding_outlined),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Column(
+                                spacing: 5,
+                                children: getSkillsList(shopDoc, context),
+                              ),
+                            ),
+                            _buildSubtitle(
+                                text: _displayPrice(shopDoc),
+                                icon: Icons.currency_rupee_rounded),
+                            _buildSubtitle(
+                                text: "My PortFolio",
+                                icon: Icons.file_present_outlined),
+                            _buildSubtitle(
+                                text: "Description", icon: Icons.notes_rounded),
+                            Row(
+                              children: [
+                                Text(
+                                  shopDoc['shopDesc'],
+                                  style: GoogleFonts.ubuntu(
+                                    fontSize: 15,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .inversePrimary,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ]);
-                },
-              ),
-              floatingActionButton: _buildButton(context),
-            );
+                    ]);
+                  },
+                ),
+                floatingActionButton: GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BillPage(
+                                  ownerId: ownerId,
+                                )));
+                  },
+                  child: Container(
+                    height: 60,
+                    width: 120,
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary,
+                        borderRadius: BorderRadius.circular(60)),
+                    child: Center(
+                        child: Text(
+                      "Buy Service",
+                      style: GoogleFonts.ubuntu(
+                          fontSize: 18, fontWeight: FontWeight.bold),
+                    )),
+                  ),
+                ));
           },
         );
       },
@@ -271,26 +297,5 @@ class _ShopPageState extends State<ShopPage> {
         ),
       ),
     ]);
-  }
-
-  Widget? _buildButton(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => BuyPreviewPage()));
-      },
-      child: Container(
-        height: 60,
-        width: 120,
-        decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primary,
-            borderRadius: BorderRadius.circular(60)),
-        child: Center(
-            child: Text(
-          "Buy Service",
-          style: GoogleFonts.ubuntu(fontSize: 18, fontWeight: FontWeight.bold),
-        )),
-      ),
-    );
   }
 }
