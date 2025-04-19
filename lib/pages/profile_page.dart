@@ -3,9 +3,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ProfilePage extends StatelessWidget {
-  ProfilePage({super.key});
+  final String userId;
+  ProfilePage({super.key, required this.userId});
 
   User? user = FirebaseAuth.instance.currentUser;
 
@@ -13,13 +15,16 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Your Profile"),
+        title: Text(
+          "Your Profile",
+          style: GoogleFonts.ubuntu(),
+        ),
         centerTitle: true,
       ),
       body: StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance
             .collection("Users")
-            .doc(user!.uid)
+            .doc(userId)
             .snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
@@ -53,7 +58,7 @@ class ProfilePage extends StatelessWidget {
                       ),
                       Text(
                         "${userDoc['firstName']} ${userDoc['lastName']}",
-                        style: TextStyle(
+                        style: GoogleFonts.ubuntu(
                           fontSize: 24,
                         ),
                       ),
@@ -62,7 +67,7 @@ class ProfilePage extends StatelessWidget {
                       ),
                       Text(
                         "${userDoc['email']}",
-                        style: TextStyle(
+                        style: GoogleFonts.ubuntu(
                             color:
                                 Theme.of(context).colorScheme.inversePrimary),
                       ),
@@ -75,7 +80,7 @@ class ProfilePage extends StatelessWidget {
                       ),
                       Text(
                         "${userDoc['bio']}",
-                        style: TextStyle(
+                        style: GoogleFonts.ubuntu(
                             fontSize: 18,
                             color:
                                 Theme.of(context).colorScheme.inversePrimary),
@@ -92,7 +97,7 @@ class ProfilePage extends StatelessWidget {
                       ),
                       _buildSubtitle(
                           icon: Icons.location_on,
-                          text: "${userDoc['city']}, ${userDoc['country']}"),
+                          text: "${userDoc['city']}, ${userDoc['country']},"),
                     ],
                   ),
                 ),
@@ -129,7 +134,7 @@ class ProfilePage extends StatelessWidget {
       ),
       Text(
         text,
-        style: TextStyle(
+        style: GoogleFonts.ubuntu(
           fontSize: 24,
         ),
       ),

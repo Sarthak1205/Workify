@@ -115,7 +115,7 @@ class ShopTile extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                          width: 150,
+                          width: 120,
                         ),
                         IconButton(
                             onPressed: () {},

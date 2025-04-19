@@ -1,4 +1,4 @@
-class Order {
+class Orders {
   final String clientId;
   final String freelancerId;
   final String orderId;
@@ -9,9 +9,9 @@ class Order {
   final String paymentStatus;
   final String transactionId;
   Map<String, dynamic> timestamps;
-  Map<String, dynamic> workSubmission;
+  List<String> workSubmission;
 
-  Order({
+  Orders({
     required this.timestamps,
     required this.workSubmission,
     required this.clientId,

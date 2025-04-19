@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:workify/components/my_button.dart';
+import 'package:workify/pages/upi_payment_page.dart';
 
 class BillPage extends StatelessWidget {
   final String ownerId;
@@ -124,7 +125,15 @@ class BillPage extends StatelessWidget {
                                 MyButton(
                                   text:
                                       "Buy Now (₹ ${shopDoc['price'] + platformFee})",
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                UpiPaymentPage(
+                                                    freelancerId:
+                                                        shopDoc["ownerId"])));
+                                  },
                                 ),
                               ],
                             ),

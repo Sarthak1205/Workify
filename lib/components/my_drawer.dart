@@ -3,7 +3,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:workify/pages/earnings_page.dart';
 import 'package:workify/pages/inbox_page.dart';
+import 'package:workify/pages/my_gigs_page.dart';
+import 'package:workify/pages/my_orders_page.dart';
 import 'package:workify/pages/my_shop_page.dart';
 import 'package:workify/pages/settings_page.dart';
 import 'package:workify/services/auth/auth_services.dart';
@@ -54,12 +57,10 @@ class _MyDrawerState extends State<MyDrawer> {
             children: [
               DrawerHeader(
                 child: Center(
-                  child: Icon(
-                    Icons.message,
-                    color: Theme.of(context).colorScheme.secondary,
-                    size: 60,
-                  ),
-                ),
+                    child: Image.asset(
+                  "lib/images/logo.png",
+                  color: Theme.of(context).colorScheme.secondary,
+                )),
               ),
 
               _buildDrawerItem(
@@ -95,6 +96,8 @@ class _MyDrawerState extends State<MyDrawer> {
                   text: "M Y  G I G S",
                   onTap: () {
                     // Navigate to My Gigs page
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => MyGigsPage()));
                   },
                 ),
                 _buildDrawerItem(
@@ -102,6 +105,10 @@ class _MyDrawerState extends State<MyDrawer> {
                   text: "E A R N I N G S",
                   onTap: () {
                     // Navigate to Earnings page
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EarningsPage()));
                   },
                 ),
               ] else ...[
@@ -118,15 +125,17 @@ class _MyDrawerState extends State<MyDrawer> {
                 text: "M Y  O R D E R S",
                 onTap: () {
                   // Navigate to My Orders page
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MyOrdersPage()));
                 },
               ),
-              // _buildDrawerItem(
-              //   icon: Icons.favorite,
-              //   text: "S A V E D  G I G S",
-              //   onTap: () {
-              //     // Navigate to Saved Gigs page
-              //   },
-              // ),
+              _buildDrawerItem(
+                icon: Icons.favorite,
+                text: "S A V E D  G I G S",
+                onTap: () {
+                  // Navigate to Saved Gigs page
+                },
+              ),
 
               // Settings
               _buildDrawerItem(

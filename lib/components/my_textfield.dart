@@ -5,10 +5,12 @@ class MyTextfield extends StatelessWidget {
   final String hintText;
   final bool obscureText;
   final TextEditingController controller;
+  final int maxLines;
   const MyTextfield(
       {super.key,
       required this.hintText,
       this.obscureText = false,
+      this.maxLines = 1,
       required this.controller});
 
   @override
@@ -33,6 +35,7 @@ class MyTextfield extends StatelessWidget {
             color: Theme.of(context).colorScheme.inversePrimary,
           ),
         ),
+        maxLines: maxLines,
       ),
     );
   }

@@ -37,7 +37,18 @@ class _InboxPageState extends State<InboxPage> {
           }
 
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Loading...");
+            return Center(child: CircularProgressIndicator());
+          }
+
+          if (snapshot.data!.docs.isEmpty) {
+            return Center(
+              child: Text(
+                "No one to Chat to :(",
+                style: GoogleFonts.ubuntu(
+                    fontSize: 24,
+                    color: Theme.of(context).colorScheme.inversePrimary),
+              ),
+            );
           }
 
           return ListView(

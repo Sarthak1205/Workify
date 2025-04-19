@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:workify/pages/image_fetch.dart';
 
 class MyShopPage extends StatefulWidget {
   const MyShopPage({super.key});
@@ -72,7 +73,7 @@ class _MyShopPageState extends State<MyShopPage> {
                               child: Text("No portfolio found"));
                         }
 
-                        var shopDoc = shopSnapshot.data!;
+                        DocumentSnapshot<Object?> shopDoc = shopSnapshot.data!;
 
                         return ListView(children: [
                           Padding(
@@ -130,9 +131,20 @@ class _MyShopPageState extends State<MyShopPage> {
                                 _buildSubtitle(
                                     text: _displayPrice(shopDoc),
                                     icon: Icons.currency_rupee_rounded),
-                                _buildSubtitle(
-                                    text: "My PortFolio",
-                                    icon: Icons.file_present_outlined),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => FileViewer(
+                                                  freelancerId:
+                                                      shopDoc['ownerId'],
+                                                )));
+                                  },
+                                  child: _buildSubtitle(
+                                      text: "My PortFolio",
+                                      icon: Icons.file_present_outlined),
+                                ),
                                 _buildSubtitle(
                                     text: "Description",
                                     icon: Icons.notes_rounded),

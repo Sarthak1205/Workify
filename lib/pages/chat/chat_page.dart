@@ -65,7 +65,6 @@ class ChatPage extends StatelessWidget {
             return Text("Loading...");
           }
 
-          //return list view
           return ListView(
             children: snapshot.data!.docs
                 .map((doc) => _buildMessageItem(doc))

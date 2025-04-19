@@ -6,8 +6,8 @@ class ShopService {
   final _auth = FirebaseAuth.instance;
   final _firestore = FirebaseFirestore.instance;
 
-  Future<void> setShopInfo1(
-      String org, pos, exp, shopIntro, shopDesc, shopCategory, price) async {
+  Future<void> setShopInfo1(String org, pos, exp, shopIntro, shopDesc,
+      shopCategory, price, deliveryTime) async {
     User? user = _auth.currentUser;
 
     final shopId = Uuid().v4();
@@ -27,7 +27,8 @@ class ShopService {
         "shopIntro": shopIntro,
         "shopDesc": shopDesc,
         "shopCategory": shopCategory,
-        "price": price
+        "price": price,
+        "deliveryTime": deliveryTime
       }, SetOptions(merge: true));
     } catch (e) {
       print(e.toString());

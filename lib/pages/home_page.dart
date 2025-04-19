@@ -20,6 +20,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final _shop = ShopService();
+  User? user = FirebaseAuth.instance.currentUser;
   String? imagePath;
   @override
   void initState() {
@@ -28,15 +29,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> fetchImagePath() async {
-    User? user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
 
     final firestore = FirebaseFirestore.instance;
     DocumentSnapshot userDoc = await firestore
         .collection("Users")
-        .doc(user.uid)
+        .doc(user!.uid)
         .collection("portfolio")
-        .doc(user.uid)
+        .doc(user!.uid)
         .get();
 
     if (userDoc.exists && userDoc.data() != null) {
@@ -63,8 +63,12 @@ class _HomePageState extends State<HomePage> {
             padding: const EdgeInsets.only(right: 5.0),
             child: GestureDetector(
               onTap: () => {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ProfilePage()))
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ProfilePage(
+                              userId: user!.uid,
+                            )))
               },
               child: Container(
                 height: 45,
@@ -221,7 +225,6 @@ class _HomePageState extends State<HomePage> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Text("Loading...");
           }
-
           return ListView(
             children: snapshot.data!
                 .map<Widget>(
@@ -233,14 +236,20 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildShopViewItem(
       Map<String, dynamic> shopData, BuildContext context) {
-    return ShopTile(
-      shopData: shopData,
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => ShopPage(shopId: shopData['ownerId'])));
-      },
-    );
+    if (shopData["ownerId"] == FirebaseAuth.instance.currentUser!.uid) {
+      return SizedBox(
+        height: 1,
+      );
+    } else {
+      return ShopTile(
+        shopData: shopData,
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ShopPage(shopId: shopData['ownerId'])));
+        },
+      );
+    }
   }
 }

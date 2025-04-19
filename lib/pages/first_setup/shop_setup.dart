@@ -20,6 +20,7 @@ class _ShopSetupPageState extends State<ShopSetupPage> {
   TextEditingController shopDescriptionController = TextEditingController();
   TextEditingController shopCategoryController = TextEditingController();
   final priceController = TextEditingController();
+  final deliveryController = TextEditingController();
 
   void setShopData() {
     bool valid = true;
@@ -31,7 +32,8 @@ class _ShopSetupPageState extends State<ShopSetupPage> {
       shopIntroductionController.text,
       shopDescriptionController.text,
       shopCategoryController.text,
-      priceController.text
+      priceController.text,
+      deliveryController.text
     ]) {
       if (s.trim().isEmpty) {
         valid = false;
@@ -41,13 +43,15 @@ class _ShopSetupPageState extends State<ShopSetupPage> {
 
     if (valid) {
       _shop.setShopInfo1(
-          orgController.text,
-          positionController.text,
-          experienceController.text,
-          shopIntroductionController.text,
-          shopDescriptionController.text,
-          shopCategoryController.text,
-          priceController.text);
+        orgController.text,
+        positionController.text,
+        experienceController.text,
+        shopIntroductionController.text,
+        shopDescriptionController.text,
+        shopCategoryController.text,
+        double.parse(priceController.text),
+        double.parse(deliveryController.text),
+      );
 
       Navigator.pushReplacement(
         context,
@@ -78,44 +82,26 @@ class _ShopSetupPageState extends State<ShopSetupPage> {
             borderRadius: BorderRadius.circular(16)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 8,
           children: [
             Text(
               "Step 1: Professional Info",
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            SizedBox(
-              height: 35,
-            ),
             MyTextfield(hintText: "Organization", controller: orgController),
-            SizedBox(
-              height: 15,
-            ),
             MyTextfield(hintText: "Position", controller: positionController),
-            SizedBox(
-              height: 15,
-            ),
             MyTextfield(
                 hintText: "Experience (in months)",
                 controller: experienceController),
-            SizedBox(
-              height: 15,
-            ),
             MyTextfield(
                 hintText: "Shop Introduction",
                 controller: shopIntroductionController),
-            SizedBox(
-              height: 15,
-            ),
             MyTextfield(
                 hintText: "Shop Category", controller: shopCategoryController),
-            SizedBox(
-              height: 15,
-            ),
             MyTextfield(
                 hintText: "Service Pricing", controller: priceController),
-            SizedBox(
-              height: 15,
-            ),
+            MyTextfield(
+                hintText: "Delivery Time", controller: deliveryController),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
               child: TextField(
@@ -139,7 +125,7 @@ class _ShopSetupPageState extends State<ShopSetupPage> {
               ),
             ),
             SizedBox(
-              height: 25,
+              height: 10,
             ),
             MyButton(text: "Next", onTap: setShopData)
           ],

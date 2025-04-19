@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:workify/pages/bill_page.dart';
 import 'package:workify/pages/chat/chat_page.dart';
+import 'package:workify/pages/image_fetch.dart';
 
 class ShopPage extends StatefulWidget {
   final String shopId;
@@ -35,7 +36,6 @@ class _ShopPageState extends State<ShopPage> {
           return const Center(child: Text("Owner not found!"));
         }
 
-        // Combine user and portfolio queries
         return FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
           future: firestore.collection("Users").doc(ownerId).get(),
           builder: (context, ownerSnapshot) {
@@ -113,6 +113,7 @@ class _ShopPageState extends State<ShopPage> {
                               height: 4,
                             ),
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 // add profile to firebase
                                 shopDoc['bannerImage'] == null
@@ -126,18 +127,6 @@ class _ShopPageState extends State<ShopPage> {
                                         backgroundImage: NetworkImage(
                                             shopDoc['bannerImage']),
                                       ),
-                                SizedBox(
-                                  width: 25,
-                                ),
-
-                                _buildSubtitle(
-                                    text:
-                                        "${ownerDoc['firstName']}, ${ownerDoc['lastName']}",
-                                    icon: Icons.person_2_rounded),
-
-                                SizedBox(
-                                  width: 100,
-                                ),
 
                                 GestureDetector(
                                   onTap: () {
@@ -178,6 +167,10 @@ class _ShopPageState extends State<ShopPage> {
                             ),
                             _buildSubtitle(
                                 text:
+                                    "${ownerDoc['firstName']}, ${ownerDoc['lastName']}",
+                                icon: Icons.person_2_rounded),
+                            _buildSubtitle(
+                                text:
                                     "${portfolioDoc['position']} at ${portfolioDoc['organization']}",
                                 icon: Icons.badge_outlined),
                             _buildSubtitle(
@@ -196,9 +189,19 @@ class _ShopPageState extends State<ShopPage> {
                             _buildSubtitle(
                                 text: _displayPrice(shopDoc),
                                 icon: Icons.currency_rupee_rounded),
-                            _buildSubtitle(
-                                text: "My PortFolio",
-                                icon: Icons.file_present_outlined),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => FileViewer(
+                                              freelancerId: shopDoc['ownerId'],
+                                            )));
+                              },
+                              child: _buildSubtitle(
+                                  text: "My PortFolio (Tap to Open)",
+                                  icon: Icons.file_present_outlined),
+                            ),
                             _buildSubtitle(
                                 text: "Description", icon: Icons.notes_rounded),
                             Row(
@@ -238,7 +241,7 @@ class _ShopPageState extends State<ShopPage> {
                         borderRadius: BorderRadius.circular(60)),
                     child: Center(
                         child: Text(
-                      "Buy Service",
+                      "Hire Service",
                       style: GoogleFonts.ubuntu(
                           fontSize: 18, fontWeight: FontWeight.bold),
                     )),
