@@ -126,8 +126,8 @@ class _UpiPaymentPageState extends State<UpiPaymentPage> {
       },
       'method': {
         'upi': true,
-        'card': false,
-        'netbanking': false,
+        'card': true,
+        'netbanking': true,
       },
       'theme': {'color': '#711de4'}
     };

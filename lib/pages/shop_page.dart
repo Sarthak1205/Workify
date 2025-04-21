@@ -205,15 +205,18 @@ class _ShopPageState extends State<ShopPage> {
                             ),
                             _buildSubtitle(
                                 text: "Description", icon: Icons.notes_rounded),
-                            Text(
-                              shopDoc['shopDesc'],
-                              style: GoogleFonts.ubuntu(
-                                fontSize: 15,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .inversePrimary,
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                shopDoc['shopDesc'],
+                                style: GoogleFonts.ubuntu(
+                                  fontSize: 15,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .inversePrimary,
+                                ),
+                                textAlign: TextAlign.left,
                               ),
-                              textAlign: TextAlign.left,
                             ),
                           ],
                         ),

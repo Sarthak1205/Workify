@@ -18,6 +18,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final _formKey = GlobalKey<FormState>();
   final picker = ImagePicker();
   File? _image;
+  Map<String, dynamic>? userDoc;
 
   late TextEditingController _firstNameController;
   late TextEditingController _lastNameController;
@@ -38,6 +39,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
         .doc(widget.userId)
         .get();
     final data = doc.data();
+    setState(() {
+      userDoc = data;
+    });
     if (data != null) {
       _firstNameController =
           TextEditingController(text: data['firstName'] ?? '');
@@ -103,9 +107,25 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 onTap: _pickImage,
                 child: CircleAvatar(
                   radius: 60,
-                  backgroundImage: _image != null ? FileImage(_image!) : null,
+                  backgroundImage: userDoc!['photoURL'] != ""
+                      ? NetworkImage(userDoc!['photoURL'])
+                      : AssetImage("lib/images/profile.png"),
                   child: _image == null
-                      ? const Icon(Icons.camera_alt, size: 40)
+                      ? Align(
+                          alignment: Alignment.bottomRight,
+                          child: Container(
+                              height: 42,
+                              width: 42,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(60),
+                                  color: Theme.of(context).colorScheme.surface),
+                              child: Icon(
+                                Icons.camera_alt,
+                                size: 25,
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .inversePrimary,
+                              )))
                       : null,
                 ),
               ),
