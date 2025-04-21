@@ -16,10 +16,29 @@ class FileUpload extends StatefulWidget {
 
 class _FileUploadState extends State<FileUpload> {
   bool readyToNext = false;
+  // File? profileImage;
   File? bannerImage;
   List<PlatformFile> selectedFiles = [];
   String buttonText = "Next 🚫";
   final _portfolio = PortfolioServices();
+
+// Future<void> _pickProfilefromCamera() async {
+//     final returnedImage =
+//         await ImagePicker().pickImage(source: ImageSource.camera);
+//     if (returnedImage == null) return;
+//     setState(() {
+//       bannerImage = File(returnedImage.path);
+//     });
+//   }
+
+//   Future<void> _pickProfilefromGallery() async {
+//     final returnedImage =
+//         await ImagePicker().pickImage(source: ImageSource.gallery);
+//     if (returnedImage == null) return;
+//     setState(() {
+//       bannerImage = File(returnedImage.path);
+//     });
+//   }
 
   Future<void> _pickBannerfromCamera() async {
     final returnedImage =

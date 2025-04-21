@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:workify/pages/earnings_page.dart';
+import 'package:workify/pages/first_setup/shop_setup.dart';
 import 'package:workify/pages/inbox_page.dart';
 import 'package:workify/pages/my_gigs_page.dart';
 import 'package:workify/pages/my_orders_page.dart';
@@ -117,6 +118,10 @@ class _MyDrawerState extends State<MyDrawer> {
                     text: "B E C O M E  A  S E L L E R",
                     onTap: () {
                       // Navigate to Shop Setup Page
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ShopSetupPage()));
                     })
               ],
 

@@ -88,8 +88,8 @@ class _UpiPaymentPageState extends State<UpiPaymentPage> {
       freelancerId: widget.freelancerId,
       orderId: Uuid().v4(),
       status: "Pending",
-      price: shop!['price'],
-      deliveryTime: shop!['deliveryTime'],
+      price: (shop!['price'] as num).toInt(),
+      deliveryTime: (shop!['deliveryTime'] as num).toInt(),
       additionalRequests: requestController.text,
       paymentStatus: "Success",
       transactionId: "$transactionId",
@@ -99,7 +99,13 @@ class _UpiPaymentPageState extends State<UpiPaymentPage> {
       order = newOrder;
     });
 
-    await _firestore.collection("Orders").add(order.toMap());
+    try {
+      await _firestore.collection("Orders").add(order.toMap());
+      print("Order added successfully.");
+    } catch (e) {
+      print("Failed to add order: $e");
+    }
+
     await _firestore
         .collection("Users")
         .doc(client!.uid)
@@ -197,7 +203,7 @@ class _UpiPaymentPageState extends State<UpiPaymentPage> {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return CircularProgressIndicator();
             }
-            var userDoc = snapshot.data!;
+            // var userDoc = snapshot.data!;
             return Container(
               height: 400,
               width: 325,

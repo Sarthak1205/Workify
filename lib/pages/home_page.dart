@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:workify/components/my_drawer.dart';
 import 'package:workify/components/shop_tile.dart';
 import 'package:workify/pages/profile_page.dart';
+import 'package:workify/pages/searchs_page.dart';
 import 'package:workify/pages/shop_by_tag.dart';
 import 'package:workify/pages/shop_page.dart';
 import 'package:workify/services/shop/shop_service.dart';
@@ -21,7 +22,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _shop = ShopService();
   User? user = FirebaseAuth.instance.currentUser;
-  String? imagePath;
+  String imagePath = "";
+
   @override
   void initState() {
     super.initState();
@@ -32,16 +34,12 @@ class _HomePageState extends State<HomePage> {
     if (user == null) return;
 
     final firestore = FirebaseFirestore.instance;
-    DocumentSnapshot userDoc = await firestore
-        .collection("Users")
-        .doc(user!.uid)
-        .collection("portfolio")
-        .doc(user!.uid)
-        .get();
+    DocumentSnapshot userDoc =
+        await firestore.collection("Users").doc(user!.uid).get();
 
     if (userDoc.exists && userDoc.data() != null) {
       setState(() {
-        imagePath = (userDoc.data() as Map<String, dynamic>)['bannerImage'];
+        imagePath = (userDoc.data() as Map<String, dynamic>)['photoURL'];
       });
     }
   }
@@ -78,13 +76,16 @@ class _HomePageState extends State<HomePage> {
                     borderRadius: BorderRadius.circular(40)),
                 child: Padding(
                   padding: const EdgeInsets.all(3.0),
-                  child: imagePath == null
-                      ? CircularProgressIndicator(
-                          color: Theme.of(context).colorScheme.primary,
+                  child: imagePath == ""
+                      ? CircleAvatar(
+                          radius: 25,
+                          backgroundImage: AssetImage(
+                            "lib/images/profile.png",
+                          ),
                         )
                       : CircleAvatar(
                           radius: 20,
-                          backgroundImage: NetworkImage(imagePath!),
+                          backgroundImage: NetworkImage(imagePath),
                         ),
                 ),
               ),
@@ -98,22 +99,42 @@ class _HomePageState extends State<HomePage> {
         children: [
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: "Search . . .",
-                hintStyle: TextStyle(
-                    color: Theme.of(context).colorScheme.inversePrimary),
-                focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.secondary)),
-                fillColor: Theme.of(context).colorScheme.surface,
-                filled: true,
-                enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                  color: Theme.of(context).colorScheme.primary,
+            child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SearchPage()),
+                  );
+                },
+                child: Container(
+                  height: 60,
+                  width: 400,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(
+                          width: 3,
+                          color: Theme.of(context).colorScheme.primary)),
+                  child: Row(
+                    spacing: 10,
+                    children: [
+                      SizedBox(
+                        width: 15,
+                      ),
+                      Icon(
+                        Icons.search_outlined,
+                        size: 30,
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                      ),
+                      Text(
+                        "Search",
+                        style: GoogleFonts.ubuntu(
+                          fontSize: 25,
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                        ),
+                      )
+                    ],
+                  ),
                 )),
-              ),
-            ),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 18, vertical: 5),

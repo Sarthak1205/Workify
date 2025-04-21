@@ -44,7 +44,8 @@ class UserInfoServices {
           "country": country,
           "bio": bio,
           "dob": dob,
-          "userInfoSet": profileSetCheck
+          "userInfoSet": profileSetCheck,
+          "photoURL": ""
         }, SetOptions(merge: true));
       } on FirebaseException catch (e) {
         print(e.toString());

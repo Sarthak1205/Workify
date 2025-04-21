@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:workify/pages/edit_profile_page.dart';
 
 class ProfilePage extends StatelessWidget {
   final String userId;
@@ -47,11 +48,24 @@ class ProfilePage extends StatelessWidget {
                         height: 150,
                         width: 150,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(90),
-                            color: Theme.of(context).colorScheme.primary,
-                            image: DecorationImage(
-                                image: AssetImage("lib/images/profile.png"),
-                                fit: BoxFit.fill)),
+                          borderRadius: BorderRadius.circular(90),
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(6.0),
+                          child: userDoc['photoURL'] == ""
+                              ? CircleAvatar(
+                                  radius: 25,
+                                  backgroundImage: AssetImage(
+                                    "lib/images/profile.png",
+                                  ),
+                                )
+                              : CircleAvatar(
+                                  radius: 20,
+                                  backgroundImage:
+                                      NetworkImage(userDoc["photoURL"]),
+                                ),
+                        ),
                       ),
                       SizedBox(
                         height: 15,
@@ -97,7 +111,7 @@ class ProfilePage extends StatelessWidget {
                       ),
                       _buildSubtitle(
                           icon: Icons.location_on,
-                          text: "${userDoc['city']}, ${userDoc['country']},"),
+                          text: "${userDoc['city']}, ${userDoc['country']}"),
                     ],
                   ),
                 ),
@@ -105,7 +119,13 @@ class ProfilePage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     IconButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      EditProfilePage(userId: user!.uid)));
+                        },
                         icon: Icon(
                           Icons.edit,
                           size: 30,
@@ -130,7 +150,7 @@ class ProfilePage extends StatelessWidget {
         size: 26,
       ),
       SizedBox(
-        width: 5,
+        width: 10,
       ),
       Text(
         text,

@@ -19,10 +19,10 @@ class ShopTile extends StatelessWidget {
           .get(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         }
         if (!snapshot.hasData || !snapshot.data!.exists) {
-          return Text("Owner details not found");
+          return const Text("Owner details not found");
         }
 
         Map<String, dynamic> ownerData =
@@ -33,41 +33,49 @@ class ShopTile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Banner Image
               Container(
                 height: 150,
-                width: 380,
-                decoration: BoxDecoration(
+                width: double.infinity,
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      topRight: Radius.circular(8)),
+                    topLeft: Radius.circular(8),
+                    topRight: Radius.circular(8),
+                  ),
                 ),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(8),
-                      topRight: Radius.circular(8)),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(8),
+                    topRight: Radius.circular(8),
+                  ),
                   child: Image.network(
                     shopData['bannerImage'],
                     fit: BoxFit.fill,
                   ),
                 ),
               ),
-              SizedBox(height: 1),
+              const SizedBox(height: 1),
+
+              // Bottom Container
               GestureDetector(
                 onTap: onTap,
                 child: Container(
                   height: 90,
-                  width: 380,
+                  width: double.infinity,
                   decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primary,
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(8),
-                          bottomRight: Radius.circular(8))),
+                    color: Theme.of(context).colorScheme.primary,
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(8),
+                      bottomRight: Radius.circular(8),
+                    ),
+                  ),
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Row(
                       children: [
+                        // Profile image
                         ownerData['profileImage'] == null
-                            ? CircleAvatar(
+                            ? const CircleAvatar(
                                 radius: 25,
                                 backgroundImage:
                                     AssetImage("lib/images/profile.png"),
@@ -77,11 +85,13 @@ class ShopTile extends StatelessWidget {
                                 backgroundImage:
                                     NetworkImage(ownerData['profileImage']),
                               ),
-                        SizedBox(width: 15),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
+                        const SizedBox(width: 12),
+
+                        // User info and shop details
+                        Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
                                 "${ownerData["firstName"]} ${ownerData["lastName"]}",
@@ -94,13 +104,16 @@ class ShopTile extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                "${shopData["shopIntro"]}",
+                                shopData["shopIntro"],
                                 style: GoogleFonts.ubuntu(
                                   fontSize: 16,
                                   color: Theme.of(context)
                                       .colorScheme
                                       .inversePrimary,
                                 ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 1,
+                                softWrap: false,
                               ),
                               Text(
                                 "₹ ${shopData["price"]}",
@@ -114,22 +127,20 @@ class ShopTile extends StatelessWidget {
                             ],
                           ),
                         ),
-                        SizedBox(
-                          width: 120,
-                        ),
+
                         IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.favorite_border_outlined,
-                              color:
-                                  Theme.of(context).colorScheme.inversePrimary,
-                              size: 30,
-                            ))
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.favorite_border_outlined,
+                            color: Theme.of(context).colorScheme.inversePrimary,
+                            size: 30,
+                          ),
+                        ),
                       ],
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         );

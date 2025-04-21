@@ -124,12 +124,14 @@ class _MyShopPageState extends State<MyShopPage> {
                                 Align(
                                   alignment: Alignment.centerLeft,
                                   child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     spacing: 5,
                                     children: getSkillsList(shopDoc),
                                   ),
                                 ),
                                 _buildSubtitle(
-                                    text: _displayPrice(shopDoc),
+                                    text: shopDoc['price'].toString(),
                                     icon: Icons.currency_rupee_rounded),
                                 GestureDetector(
                                   onTap: () {
@@ -148,19 +150,15 @@ class _MyShopPageState extends State<MyShopPage> {
                                 _buildSubtitle(
                                     text: "Description",
                                     icon: Icons.notes_rounded),
-                                Row(
-                                  children: [
-                                    Text(
-                                      shopDoc['shopDesc'],
-                                      style: GoogleFonts.ubuntu(
-                                        fontSize: 15,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .inversePrimary,
-                                      ),
-                                      textAlign: TextAlign.left,
-                                    ),
-                                  ],
+                                Text(
+                                  shopDoc['shopDesc'],
+                                  style: GoogleFonts.ubuntu(
+                                    fontSize: 15,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .inversePrimary,
+                                  ),
+                                  textAlign: TextAlign.left,
                                 ),
                               ],
                             ),
@@ -188,16 +186,6 @@ class _MyShopPageState extends State<MyShopPage> {
             color: Theme.of(context).colorScheme.inversePrimary, fontSize: 15),
       );
     }).toList();
-  }
-
-  String _displayPrice(DocumentSnapshot shopDoc) {
-    Map<String, dynamic>? data = shopDoc.data() as Map<String, dynamic>?;
-    if (data == null || data['price'] == null) {
-      return "No price available";
-    }
-    double start = data['price'] - (data['price'] * 0.3);
-    double end = data['price'] + (data['price'] * 0.3);
-    return '$start - $end';
   }
 
   Widget _buildSubtitle({

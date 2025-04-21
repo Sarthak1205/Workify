@@ -96,7 +96,7 @@ class RegisterPage extends StatelessWidget {
 
               SquareTile(
                 imagePath: "lib/images/google.png",
-                onTap: () => {},
+                onTap: () => AuthService().signInWithGoogle(),
               ),
 
               const SizedBox(

@@ -43,50 +43,77 @@ List<Tag> listOfTags = [
       categoryName: "Copy Writing",
       imagePath: "lib/images/tags/CopyWriting.png"),
   Tag(
+      categoryName: "Customer Support",
+      imagePath: "lib/images/tags/CustomerSupport.jpeg"),
+  Tag(
       categoryName: "Cyber Security",
-      imagePath: "lib/images/tags/CyberSecurity.jpeg"),
+      imagePath: "lib/images/tags/Cybersecurity.jpeg"),
+  Tag(categoryName: "Data Entry", imagePath: "lib/images/tags/DataEntry.jpeg"),
+  Tag(
+      categoryName: "Data Analysis",
+      imagePath: "lib/images/tags/DataAnalysis.jpeg"),
   Tag(categoryName: "Data Entry", imagePath: "lib/images/tags/DataEntry.jpeg"),
   Tag(
       categoryName: "Data Science",
       imagePath: "lib/images/tags/DataScience.jpeg"),
   Tag(
-      categoryName: "Digital Marketing",
-      imagePath: "lib/images/tags/DigitalMarketing.jpeg"),
-  Tag(categoryName: "E Commerce", imagePath: "lib/images/tags/ECommerce.jpeg"),
+      categoryName: "Deep Learning",
+      imagePath: "lib/images/tags/DeepLearning.jpeg"),
   Tag(
-      categoryName: "Facebook Ads",
-      imagePath: "lib/images/tags/FacebookAds.jpeg"),
-  Tag(categoryName: "Finance", imagePath: "lib/images/tags/Finance.jpeg"),
-  Tag(categoryName: "Flutter", imagePath: "lib/images/tags/Flutter.jpeg"),
+      categoryName: "Email Marketing",
+      imagePath: "lib/images/tags/EmailMarketing.png"),
+  Tag(
+      categoryName: "Ethical Hacking",
+      imagePath: "lib/images/tags/EthicalHacking.jpeg"),
+  Tag(
+      categoryName: "Finance Consultance",
+      imagePath: "lib/images/tags/FinanceConsulting.jpeg"),
+  Tag(
+      categoryName: "Flutter Developer",
+      imagePath: "lib/images/tags/Flutter_icon.png"),
+  Tag(categoryName: "Food", imagePath: "lib/images/tags/Food.jpg"),
+  Tag(
+      categoryName: "Frontend Developer",
+      imagePath: "lib/images/tags/Frontend_.jpeg"),
+  Tag(
+      categoryName: "FullStack Developer",
+      imagePath: "lib/images/tags/FullStack_icon.jpeg"),
   Tag(
       categoryName: "Game Development",
-      imagePath: "lib/images/tags/GameDevelopment.jpeg"),
+      imagePath: "lib/images/tags/GAme_development_logo.jpeg"),
   Tag(
       categoryName: "Graphic Design",
-      imagePath: "lib/images/tags/GraphicDesign.jpeg"),
+      imagePath: "lib/images/tags/Graphic_Design.jpeg"),
   Tag(
       categoryName: "Illustration",
       imagePath: "lib/images/tags/Illustration.jpeg"),
   Tag(
       categoryName: "IOS Development",
-      imagePath: "lib/images/tags/IOSDevelopment.jpeg"),
-  Tag(categoryName: "Java", imagePath: "lib/images/tags/Java.jpeg"),
-  Tag(categoryName: "Javascript", imagePath: "lib/images/tags/Javascript.jpeg"),
+      imagePath: "lib/images/tags/ios_development_logo.png"),
+  Tag(
+      categoryName: "Legal Consultant",
+      imagePath: "lib/images/tags/LegalConsulting.jpeg"),
   Tag(
       categoryName: "Logo Design",
-      imagePath: "lib/images/tags/LogoDesign.jpeg"),
+      imagePath: "lib/images/tags/Logo_Design.png"),
   Tag(
       categoryName: "Machine Learning",
       imagePath: "lib/images/tags/MachineLearning.jpeg"),
   Tag(
-      categoryName: "Mobile App Design",
-      imagePath: "lib/images/tags/MobileAppDesign.jpeg"),
+      categoryName: "Market Research",
+      imagePath: "lib/images/tags/MarketResearch.jpeg"),
+  Tag(
+      categoryName: "Mobile App Development and Design",
+      imagePath: "lib/images/tags/Mobile_development_icon.png"),
   Tag(
       categoryName: "Motion Graphics",
       imagePath: "lib/images/tags/MotionGraphics.jpeg"),
   Tag(
       categoryName: "Music Production",
-      imagePath: "lib/images/tags/MusicProduction.jpeg"),
+      imagePath: "lib/images/tags/MusicProduction.jpg"),
+  Tag(
+      categoryName: "Network Security",
+      imagePath: "lib/images/tags/NetworkSecurity.jpeg"),
   Tag(categoryName: "NFT Art", imagePath: "lib/images/tags/NFTArt.jpeg"),
   Tag(
       categoryName: "Packaging Design",
@@ -94,30 +121,42 @@ List<Tag> listOfTags = [
   Tag(
       categoryName: "Photo Editing",
       imagePath: "lib/images/tags/PhotoEditing.jpeg"),
-  Tag(categoryName: "Python", imagePath: "lib/images/tags/Python.jpeg"),
+  Tag(
+      categoryName: "Penetration Testing",
+      imagePath: "lib/images/tags/PenetrationTesting.png"),
+  Tag(categoryName: "PPC", imagePath: "lib/images/tags/PPC.jpeg"),
+  Tag(
+      categoryName: "Project Management",
+      imagePath: "lib/images/tags/ProjectManagement.jpeg"),
   Tag(categoryName: "SEO", imagePath: "lib/images/tags/SEO.jpeg"),
   Tag(
       categoryName: "Shopify Store",
       imagePath: "lib/images/tags/ShopifyStore.jpeg"),
   Tag(
       categoryName: "Social Media Marketing",
-      imagePath: "lib/images/tags/SocialMediaMarketing.jpeg"),
+      imagePath: "lib/images/tags/SocialMediaMarketig.jpeg"),
   Tag(
       categoryName: "Sound Design",
       imagePath: "lib/images/tags/SoundDesign.jpeg"),
   Tag(
-      categoryName: "UI UX Design",
-      imagePath: "lib/images/tags/UIUXDesign.jpeg"),
+      categoryName: "Technical Writing",
+      imagePath: "lib/images/tags/technicalWriting.jpeg"),
+  Tag(categoryName: "UI UX Design", imagePath: "lib/images/tags/Ui_Ux.jpeg"),
   Tag(
       categoryName: "Video Editing",
       imagePath: "lib/images/tags/VideoEditing.jpeg"),
   Tag(
       categoryName: "Virtual Assistant",
-      imagePath: "lib/images/tags/VirtualAssistant.jpeg"),
+      imagePath: "lib/images/tags/VirtualAssistance.png"),
   Tag(categoryName: "Voice Over", imagePath: "lib/images/tags/VoiceOver.jpeg"),
-  Tag(categoryName: "Web Design", imagePath: "lib/images/tags/WebDesign.jpeg"),
+  Tag(categoryName: "Web Design", imagePath: "lib/images/tags/Web_Design.jpeg"),
   Tag(
       categoryName: "Web Development",
       imagePath: "lib/images/tags/WebDevelopment.jpeg"),
-  Tag(categoryName: "Wordpress", imagePath: "lib/images/tags/Wordpress.jpeg"),
+  Tag(
+      categoryName: "Wordpress",
+      imagePath: "lib/images/tags/Wordpress_logo.png"),
+  Tag(
+      categoryName: "Youtube Video Editing",
+      imagePath: "lib/images/tags/YouTubeVideoEditing.jpeg"),
 ];

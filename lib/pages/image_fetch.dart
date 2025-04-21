@@ -115,12 +115,11 @@ class _FileViewerState extends State<FileViewer> {
       await ref.putFile(localFile);
       String downloadUrl = await ref.getDownloadURL();
 
-      User? user = FirebaseAuth.instance.currentUser;
       DocumentReference docRef = FirebaseFirestore.instance
           .collection("Users")
-          .doc(user!.uid)
+          .doc(currUser.uid)
           .collection("portfolio")
-          .doc(user.uid);
+          .doc(currUser.uid);
 
       await docRef.set({
         "urls": FieldValue.arrayUnion([downloadUrl])
@@ -185,7 +184,7 @@ class _FileViewerState extends State<FileViewer> {
                   icon: const Icon(Icons.upload_file),
                   onPressed: uploadFile,
                 )
-              : Text("")
+              : const SizedBox.shrink()
         ],
       ),
       body: isLoading
@@ -209,13 +208,31 @@ class _FileViewerState extends State<FileViewer> {
                         mainAxisSpacing: 8,
                       ),
                       itemBuilder: (context, index) {
+                        final imageUrl = userFiles["images"]![index];
                         return GestureDetector(
-                          onTap: () =>
-                              showPreview(context, userFiles["images"]![index]),
+                          onTap: () => showPreview(context, imageUrl),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(10),
-                            child: Image.network(userFiles["images"]![index],
-                                fit: BoxFit.cover),
+                            child: Image.network(
+                              imageUrl,
+                              fit: BoxFit.cover,
+                              loadingBuilder:
+                                  (context, child, loadingProgress) {
+                                if (loadingProgress == null) return child;
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    value: loadingProgress.expectedTotalBytes !=
+                                            null
+                                        ? loadingProgress
+                                                .cumulativeBytesLoaded /
+                                            loadingProgress.expectedTotalBytes!
+                                        : null,
+                                  ),
+                                );
+                              },
+                              errorBuilder: (context, error, stackTrace) =>
+                                  const Center(child: Icon(Icons.broken_image)),
+                            ),
                           ),
                         );
                       },
@@ -236,9 +253,6 @@ class _FileViewerState extends State<FileViewer> {
                             Uri.decodeFull(docUrl)
                                 .split('/')
                                 .last
-                                .split('_')
-                                .skip(1)
-                                .join('_')
                                 .split('?')
                                 .first,
                           ),

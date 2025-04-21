@@ -15,6 +15,7 @@ class ClientProfileSetup extends StatefulWidget {
 class _ClientProfileSetupState extends State<ClientProfileSetup> {
   final _info = UserInfoServices();
   bool isFreelancer = false;
+  String selectedGender = "";
 
   @override
   void initState() {
@@ -29,16 +30,16 @@ class _ClientProfileSetupState extends State<ClientProfileSetup> {
     });
   }
 
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final genderController = TextEditingController();
+  final cityController = TextEditingController();
+  final countryController = TextEditingController();
+  final bioController = TextEditingController();
+  final dobController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    final firstNameController = TextEditingController();
-    final lastNameController = TextEditingController();
-    final genderController = TextEditingController();
-    final cityController = TextEditingController();
-    final countryController = TextEditingController();
-    final bioController = TextEditingController();
-    final dobController = TextEditingController();
-
     void setUserInfo() {
       List<String> userInfo = [
         firstNameController.text.trim(),
@@ -129,12 +130,20 @@ class _ClientProfileSetupState extends State<ClientProfileSetup> {
                             width: 10,
                           ),
                           GestureDetector(
-                            onTap: () => {genderController.text = "Male"},
+                            onTap: () {
+                              setState(() {
+                                selectedGender = "Male";
+                                genderController.text = "Male";
+                              });
+                            },
                             child: Container(
                               height: 65,
                               width: 65,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(16),
+                                  color: selectedGender == "Male"
+                                      ? Theme.of(context).colorScheme.primary
+                                      : Colors.transparent,
                                   border: Border.all(
                                       width: 3,
                                       color: Theme.of(context)
@@ -149,14 +158,20 @@ class _ClientProfileSetupState extends State<ClientProfileSetup> {
                             ),
                           ),
                           GestureDetector(
-                            onTap: () => {
-                              genderController.text = "Female",
+                            onTap: () {
+                              setState(() {
+                                selectedGender = "Female";
+                                genderController.text = "Female";
+                              });
                             },
                             child: Container(
                               height: 65,
                               width: 65,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(16),
+                                  color: selectedGender == "Female"
+                                      ? Theme.of(context).colorScheme.primary
+                                      : Colors.transparent,
                                   border: Border.all(
                                       width: 3,
                                       color: Theme.of(context)
