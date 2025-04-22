@@ -45,7 +45,8 @@ class UserInfoServices {
           "bio": bio,
           "dob": dob,
           "userInfoSet": profileSetCheck,
-          "photoURL": ""
+          "photoURL": "",
+          "savedShops": []
         }, SetOptions(merge: true));
       } on FirebaseException catch (e) {
         print(e.toString());

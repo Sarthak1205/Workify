@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:workify/components/animated_button.dart';
 
 class EditProfilePage extends StatefulWidget {
   final String userId;
@@ -84,7 +85,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       'dob': _dobController.text,
       'city': _cityController.text,
       'country': _countryController.text,
-      'photoURL': photoURL,
+      'photoURL': photoURL ?? "",
     }, SetOptions(merge: true));
 
     if (mounted) Navigator.pop(context);
@@ -137,10 +138,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
               _buildTextField("City", _cityController),
               _buildTextField("Country", _countryController),
               const SizedBox(height: 20),
-              ElevatedButton.icon(
-                onPressed: _saveChanges,
-                icon: const Icon(Icons.save),
-                label: const Text("Save Changes"),
+              // ElevatedButton.icon(
+              //   onPressed: _saveChanges,
+              //   icon: const Icon(Icons.save),
+              //   label: const Text("Save Changes"),
+              // ),
+              MyButton(
+                text: "Save Changes",
+                onTap: _saveChanges,
               )
             ],
           ),

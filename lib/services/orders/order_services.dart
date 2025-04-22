@@ -8,6 +8,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 class OrderServices {
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
+  final User? user = FirebaseAuth.instance.currentUser;
   final _storage = FirebaseStorage.instance;
 
   Stream<QuerySnapshot> getPendingGigs() {

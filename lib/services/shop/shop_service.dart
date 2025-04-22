@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 
 class ShopService {
@@ -64,6 +65,21 @@ class ShopService {
         //return shop
         return shop;
       }).toList();
+    });
+  }
+
+  Stream<List<Map<String, dynamic>>> getSavedShop(List<dynamic> ownerIds) {
+    if (ownerIds.isEmpty) {
+      Center(child: Text("No Shops"));
+      return Stream.value([]);
+    }
+
+    return _firestore
+        .collection("Shops")
+        .where('ownerId', whereIn: ownerIds)
+        .snapshots()
+        .map((snapshot) {
+      return snapshot.docs.map((doc) => doc.data()).toList();
     });
   }
 }

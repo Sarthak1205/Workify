@@ -9,6 +9,7 @@ import 'package:workify/pages/inbox_page.dart';
 import 'package:workify/pages/my_gigs_page.dart';
 import 'package:workify/pages/my_orders_page.dart';
 import 'package:workify/pages/my_shop_page.dart';
+import 'package:workify/pages/saved_gigs.dart';
 import 'package:workify/pages/settings_page.dart';
 import 'package:workify/services/auth/auth_services.dart';
 
@@ -139,6 +140,8 @@ class _MyDrawerState extends State<MyDrawer> {
                 text: "S A V E D  G I G S",
                 onTap: () {
                   // Navigate to Saved Gigs page
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SavedGigs()));
                 },
               ),
 

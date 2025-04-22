@@ -1,5 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:workify/pages/get_started_page.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -15,14 +18,10 @@ class _SplashScreenState extends State<SplashScreen>
   int _visibleLetters = 0;
 
   late AnimationController _dotsController;
-  late List<Animation<Offset>> _topDots = [];
-  late List<Animation<Offset>> _bottomDots = [];
+  final List<Animation<Offset>> _topDots = [];
 
-  late List<Animation<double>> _topDotFades = [];
-  late List<Animation<double>> _topDotScales = [];
-
-  late List<Animation<double>> _bottomDotFades = [];
-  late List<Animation<double>> _bottomDotScales = [];
+  final List<Animation<double>> _topDotFades = [];
+  final List<Animation<double>> _topDotScales = [];
 
   @override
   void initState() {
@@ -63,11 +62,8 @@ class _SplashScreenState extends State<SplashScreen>
 
   void _startDotAnimations() async {
     _topDots.clear();
-    _bottomDots.clear();
     _topDotFades.clear();
     _topDotScales.clear();
-    _bottomDotFades.clear();
-    _bottomDotScales.clear();
 
     List<Offset> topStartOffsets = [
       Offset(0.7, 2),
@@ -78,17 +74,6 @@ class _SplashScreenState extends State<SplashScreen>
       Offset(-0.1, -2),
       Offset(0.2, -3),
       Offset(0.6, -3.5)
-    ];
-
-    List<Offset> bottomStartOffsets = [
-      Offset(0.3, 3),
-      Offset(0.4, 3),
-      Offset(0.7, 3)
-    ];
-    List<Offset> bottomEndOffsets = [
-      Offset(0.6, 3),
-      Offset(0.2, 3),
-      Offset(-0.1, 3)
     ];
 
     for (int i = 0; i < 3; i++) {
@@ -113,21 +98,7 @@ class _SplashScreenState extends State<SplashScreen>
     }
 
     for (int i = 0; i < 3; i++) {
-      double start = i * 0.2;
       // double size = (i == 1) ? 12.0 : 8.0;
-
-      _bottomDots.add(Tween<Offset>(
-        begin: bottomStartOffsets[i],
-        end: bottomEndOffsets[i],
-      ).animate(CurvedAnimation(
-          parent: _dotsController,
-          curve: Interval(start, 1.0, curve: Curves.easeOutBack))));
-
-      _bottomDotFades.add(CurvedAnimation(
-          parent: _dotsController, curve: Interval(start, start + 0.3)));
-      _bottomDotScales.add(CurvedAnimation(
-          parent: _dotsController,
-          curve: Interval(start, start + 0.5, curve: Curves.elasticOut)));
 
       setState(() {});
       await Future.delayed(const Duration(milliseconds: 150));
@@ -154,9 +125,9 @@ class _SplashScreenState extends State<SplashScreen>
             width: size,
             height: size,
             margin: const EdgeInsets.symmetric(horizontal: 22),
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.primary,
             ),
           ),
         ),
@@ -165,7 +136,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Center(
         child: Stack(
           alignment: Alignment.center,
@@ -182,10 +153,10 @@ class _SplashScreenState extends State<SplashScreen>
                     duration: const Duration(milliseconds: 300),
                     child: Text(
                       title[index],
-                      style: const TextStyle(
+                      style: GoogleFonts.ubuntu(
                         fontSize: 42,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                   ),
@@ -204,16 +175,6 @@ class _SplashScreenState extends State<SplashScreen>
             }),
 
             // Bottom dots with effects
-            ...List.generate(_bottomDots.length, (i) {
-              double size = (i == 1) ? 12.0 : 8.0;
-              return SlideTransition(
-                position: _bottomDots[i],
-                child: _buildDot(
-                    fade: _bottomDotFades[i],
-                    scale: _bottomDotScales[i],
-                    size: size),
-              );
-            }),
           ],
         ),
       ),

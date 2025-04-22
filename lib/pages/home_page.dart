@@ -97,6 +97,9 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(
+            height: 5,
+          ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
             child: GestureDetector(
@@ -107,10 +110,10 @@ class _HomePageState extends State<HomePage> {
                   );
                 },
                 child: Container(
-                  height: 60,
+                  height: 55,
                   width: 400,
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(8),
                       border: Border.all(
                           width: 3,
                           color: Theme.of(context).colorScheme.primary)),
